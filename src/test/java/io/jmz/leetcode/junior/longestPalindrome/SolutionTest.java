@@ -11,6 +11,10 @@ class SolutionTest {
     @CsvSource({
             "cbbd, bb",
             "babad, bab",
+            "badiedelsesle, elsesle",
+            "bb, bb",
+            "abcd, a",
+            ","
     })
     void longestPalindrome(String given, String expect) {
         String act = new Solution().longestPalindrome(given);

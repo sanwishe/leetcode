@@ -2,11 +2,11 @@ package io.jmz.leetcode.junior.longestPalindrome;
 
 public class Solution {
     public String longestPalindrome(String s) {
-        int len = s.length();
-        if (len == 1) {
+
+        if (null == s || s.isEmpty()) {
             return s;
         }
-
+        int len = s.length();
         int palindromeLen = 0;
         String palindrome = "";
         for (int i = 0; i < len; i++) {
@@ -15,19 +15,20 @@ public class Solution {
                     continue;
                 }
 
-                for (int m = 0, n = j; m <= n; m++, n--) {
+                for (int m = 0, n = j; m + i <= n; ++m, --n) {
                     if (s.charAt(i + m) != s.charAt(n)) {
                         break;
                     }
 
-                    if ((n - m - j < 2) && (j - i + 1 > palindromeLen)) {
+                    if ((s.charAt(i + m) == s.charAt(n)) && (n - m - i <= 2) && (j - i + 1 > palindromeLen)) {
                         palindromeLen = j - i + 1;
-                        palindrome = s.substring(i, j);
+                        palindrome = s.substring(i, j + 1);
+                        break;
                     }
                 }
             }
         }
 
-        return palindrome;
+        return palindromeLen == 0 ? s.substring(0, 1) : palindrome;
     }
 }
