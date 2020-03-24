@@ -1,38 +1,62 @@
 package io.jmz.leetcode.junior.addtwonumbers;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SolutionTest {
-
-    @Test
-    void addTwoNumbers() {
+    @ParameterizedTest
+    @CsvSource({
+            "{1 3 5 6 3},{3 7 3 9},{4 0 9 5 4}",
+            "{2 1 3},{3 3 7},{5 4 0 1}",
+            "{1},{3 2 7},{4 2 7}",
+    })
+    void parameterizedTestSolution(String sl1, String sl2, String sExpect) {
         //given
-        ListNode l1 = buildTestData(new int[]{2, 1, 3});
-        ListNode l2 = buildTestData(new int[]{3, 3, 7});
+        ListNode l1 = convert2ListNode(sl1);
+        ListNode l2 = convert2ListNode(sl2);
 
-        Solution solution = new Solution();
+        ListNode expect = convert2ListNode(sExpect);
 
 
-        // when
-        ListNode res = solution.addTwoNumbers(l1, l2);
+        //when
+        ListNode actual = new Solution().addTwoNumbers(l1, l2);
 
         //then
-        System.out.println(res.val);
+        while (actual != null) {
+            assertEquals(actual.val, expect.val);
+            actual = actual.next;
+            expect = expect.next;
+        }
     }
 
-    private ListNode buildTestData(int[] ints) {
+    private ListNode convert2ListNode(String sl) {
         ListNode head = null;
         ListNode cursor = null;
 
-        for (int i = 0; i < ints.length; i++) {
-            ListNode node = new ListNode(ints[i]);
+        if (sl.length() <= 0) {
+            return null;
+        }
 
-            if (head == null && cursor == null) {
-                head = cursor = node;
+        sl = sl.substring(1, sl.length() - 1);
+        String[] sls = sl.split(" ");
+
+        for (String s : sls) {
+            if (s.length() < 0 || s.length() > 2) {
+                throw new RuntimeException("wrong input");
             }
 
-            cursor.next = node;
-            cursor = node;
+            int num = Integer.parseInt(s, 10);
+
+            ListNode node = new ListNode(num);
+
+            if (head == null || cursor == null) {
+                head = cursor = node;
+            } else {
+                cursor.next = node;
+                cursor = node;
+            }
         }
 
         return head;
