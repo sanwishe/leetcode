@@ -11,6 +11,7 @@ class SolutionTest {
             "{1 3 5 6 3},{3 7 3 9},{4 0 9 5 4}",
             "{2 1 3},{3 3 7},{5 4 0 1}",
             "{1},{3 2 7},{4 2 7}",
+            "{2 4 3},{5 6 4},{7 0 8}"
     })
     void parameterizedTestSolution(String sl1, String sl2, String sExpect) {
         //given
