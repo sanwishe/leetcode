@@ -1,4 +1,4 @@
-package io.jmz.leetcode.datastructure;
+package io.jmz.leetcode.datastructure.circular;
 
 import java.util.NoSuchElementException;
 
