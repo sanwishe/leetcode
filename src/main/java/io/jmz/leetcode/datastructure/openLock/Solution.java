@@ -1,18 +1,27 @@
 package io.jmz.leetcode.datastructure.openLock;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 public class Solution {
+    private static String toStrCode(int[] code) {
+        return String.format("%d%d%d%d", code[0], code[1], code[2], code[3]);
+    }
+
     public int openLock(String[] deadends, String target) {
         int step = 0;
         boolean found = false;
-        Set<String> deadEndSet = new HashSet<>(Arrays.asList(deadends));
 
-        if (deadEndSet.contains(target)) {
-            return step;
+        Set<String> deadEndSet = new HashSet<>(Arrays.asList(deadends));
+        deadEndSet.add(target);
+
+        if (deadEndSet.contains("0000")) {
+            return -1;
         }
 
-        int[] start = new int[]{0,0,0,0};
+        int[] start = new int[]{0, 0, 0, 0};
 
         LinkedList<int[]> bfsQueue = new LinkedList<>();
         HashSet<String> bfsTried = new HashSet<>();
@@ -46,6 +55,7 @@ public class Solution {
                     // counterClockwise
                     int[] copiedDown = Arrays.copyOf(cur, cur.length);
                     copiedDown[p] = copiedDown[p] == 0 ? 9 : copiedDown[p] - 1;
+
                     String downNeighbor = toStrCode(copiedDown);
 
                     if (downNeighbor.equals(target)) {
@@ -62,9 +72,5 @@ public class Solution {
         }
 
         return found ? step : -1;
-    }
-
-    private static String toStrCode(int[] code) {
-        return String.format("%d%d%d%d", code[0], code[1], code[2], code[3]);
     }
 }
