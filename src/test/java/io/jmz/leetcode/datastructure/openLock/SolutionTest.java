@@ -1,68 +1,29 @@
 package io.jmz.leetcode.datastructure.openLock;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SolutionTest {
 
-    // deadends = ["0201","0101","0102","1212","2002"], target = "0202"
-    @Test
-    void openLock1() {
-        // given
-        String[] deadends = new String[]{"0201", "0101", "0102", "1212", "2002"};
-        String target = "0202";
-
-        // when
-        int actual = new Solution().openLock(deadends, target);
-
-
-        //then
-        assertEquals(6, actual);
+    static Stream<Arguments> argumentsProvide() {
+        return Stream.of(
+                Arguments.arguments(new String[]{"0201", "0101", "0102", "1212", "2002"}, "0202", 6),
+                Arguments.arguments(new String[]{"8888"}, "0009", 1),
+                Arguments.arguments(new String[]{"8887", "8889", "8878", "8898", "8788", "8988", "7888", "9888"}, "8888", -1),
+                Arguments.arguments(new String[]{"0000"}, "8888", -1)
+        );
     }
 
-    // deadends = ["8888"], target = "0009"
-    @Test
-    void openLock2() {
-        // given
-        String[] deadends = new String[]{"8888"};
-        String target = "0009";
-
-        // when
+    @ParameterizedTest
+    @MethodSource(value = "argumentsProvide")
+    void aggretedTestcase(String[] deadends, String target, int expect) {
         int actual = new Solution().openLock(deadends, target);
 
-
-        //then
-        assertEquals(1, actual);
-    }
-
-    // deadends = ["8887","8889","8878","8898","8788","8988","7888","9888"], target = "8888"
-    @Test
-    void openLock3() {
-        // given
-        String[] deadends = new String[]{"8887","8889","8878","8898","8788","8988","7888","9888"};
-        String target = "8888";
-
-        // when
-        int actual = new Solution().openLock(deadends, target);
-
-
-        //then
-        assertEquals(-1, actual);
-    }
-
-    // deadends = ["0000"], target = "8888"
-    @Test
-    void openLock4() {
-        // given
-        String[] deadends = new String[]{"0000"};
-        String target = "8888";
-
-        // when
-        int actual = new Solution().openLock(deadends, target);
-
-
-        //then
-        assertEquals(-1, actual);
+        assertEquals(expect, actual);
     }
 }
