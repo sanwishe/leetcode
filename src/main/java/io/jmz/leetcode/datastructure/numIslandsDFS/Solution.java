@@ -1,7 +1,6 @@
-package io.jmz.leetcode.datastructure.numIslandsBFS;
+package io.jmz.leetcode.datastructure.numIslandsDFS;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 
 public class Solution {
     public int numIslands(char[][] grid) {
@@ -15,31 +14,31 @@ public class Solution {
 
                 num++;
 
-                Queue<Node> queue = new LinkedList<>();
-                queue.offer(new Node(x, y));
+                Stack<Node> stack = new Stack<>();
+                stack.push(new Node(x, y));
 
-                while (!queue.isEmpty()) {
-                    Node node = queue.remove();
+                while (!stack.isEmpty()) {
+                    Node node = stack.pop();
                     grid[node.X][node.Y] = 'M';
 
                     // up
                     if (node.X - 1 >= 0 && grid[node.X - 1][node.Y] == '1') {
-                        queue.offer(new Node(node.X - 1, node.Y));
+                        stack.push(new Node(node.X - 1, node.Y));
                     }
 
                     // down
                     if (node.X + 1 < grid.length && grid[node.X + 1][node.Y] == '1') {
-                        queue.offer(new Node(node.X + 1, node.Y));
+                        stack.push(new Node(node.X + 1, node.Y));
                     }
 
                     // left
                     if (node.Y - 1 >= 0 && grid[node.X][node.Y - 1] == '1') {
-                        queue.offer(new Node(node.X, node.Y - 1));
+                        stack.push(new Node(node.X, node.Y - 1));
                     }
 
                     // right
                     if (node.Y + 1 < grid[0].length && grid[node.X][node.Y + 1] == '1') {
-                        queue.offer(new Node(node.X, node.Y + 1));
+                        stack.push(new Node(node.X, node.Y + 1));
                     }
                 }
             }
